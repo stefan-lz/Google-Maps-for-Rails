@@ -14,6 +14,16 @@ module Gmaps4rails
       json << object_json.to_s unless object_json.nil?
       json << "]"
     end
+    
+    #get the static map image this instance
+    def static_gmap
+      self.process_geocoding unless self.send(gmaps4rails_options[:checker])
+      
+      lat = self.send(gmaps4rails_options[:lat_column])
+      lng = self.send(gmaps4rails_options[:lng_column])
+      
+      Gmaps4rails.static_map("#{lat},#{lng}")
+    end
 
     module ClassMethods
 

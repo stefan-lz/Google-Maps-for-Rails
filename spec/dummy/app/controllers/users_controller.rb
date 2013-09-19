@@ -3,7 +3,6 @@ class UsersController < ApplicationController
   # GET /users.json
   respond_to :html, :json
   
-  
   def index
     @users = User.all
     @json = @users.to_gmaps4rails do |user, marker|
@@ -18,6 +17,7 @@ class UsersController < ApplicationController
       # })
       marker.infowindow user.name
     end
+
     respond_with @json
   end
   
@@ -101,5 +101,12 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url }
       format.json { head :ok }
     end
+  end
+
+  # GET /users/1/static_map
+  def static_map
+    @user = User.find(params[:id])
+    
+    render text: @user.static_gmap, content_type: "media/png"
   end
 end

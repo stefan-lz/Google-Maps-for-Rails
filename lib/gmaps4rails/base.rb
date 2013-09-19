@@ -18,6 +18,7 @@ module Gmaps4rails
   
   autoload :BaseNetMethods,   'gmaps4rails/api_wrappers/base_net_methods'
   autoload :Geocoder,         'gmaps4rails/api_wrappers/geocoder'
+  autoload :StaticMap,        'gmaps4rails/api_wrappers/static_map'
   autoload :Direction,        'gmaps4rails/api_wrappers/direction'
   autoload :Places,           'gmaps4rails/api_wrappers/places'
   autoload :ObjectAccessor,   'gmaps4rails/object_accessor'
@@ -34,10 +35,18 @@ module Gmaps4rails
   # * raw: to get the raw response from google, default is false
   def Gmaps4rails.geocode(address, lang="en", raw = false, protocol = "http")
     ::Gmaps4rails::Geocoder.new(address, {
-      :language => lang, 
+      :language => lang,
       :raw      => raw,
       :protocol => protocol
     }).get_coordinates
+  end
+
+  def Gmaps4rails.static_map(address, map_type="roadmap", size="512x512", protocol = "http")
+    ::Gmaps4rails::StaticMap.new(address, {
+      :map_type => map_type,
+      :size     => size,
+      :protocol => protocol
+    }).get_map
   end
   
   def Gmaps4rails.create_json(object, &block)
@@ -97,6 +106,10 @@ module Gmaps4rails
   class PlacesNetStatus       < StandardError; end
   class PlacesInvalidQuery    < StandardError; end
   
+  class StaticMapStatus         < StandardError; end
+  class StaticMapNetStatus      < StandardError; end
+  class StaticMapInvalidQuery   < StandardError; end
+
   def Gmaps4rails.condition_eval(object, condition)
     case condition
     when Symbol, String        then object.send condition

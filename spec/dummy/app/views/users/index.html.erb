@@ -84,6 +84,10 @@
            :markers => {:data => @json,
                         :options => {"list_container" => "markers_list" }
                        })%>
+
+<img src="/users/1/static_map"></img>
+<%#= img<static_gmap({}) %>
+
 <div id="markers_list"></div>
 <%#= gmaps(:map_options => { :auto_adjust => true  },
       :markers => { :data => '[{"lat":42.3124,"lng":71.1712}]', :options => {:do_clustering => true} }) %>

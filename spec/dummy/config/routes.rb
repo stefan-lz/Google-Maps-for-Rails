@@ -1,5 +1,10 @@
 Dummy::Application.routes.draw do
-  resources :users
+  resources :users do
+    member do
+      get 'static_map'
+    end
+  end
+
   root :to => "users#index"
   # The priority is based upon order of creation:
   # first created -> highest priority.
